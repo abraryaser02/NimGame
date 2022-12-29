@@ -1,0 +1,32 @@
+def nim_strategy(piles):
+    """ Pick a random pile and a random number to remove in that pile """
+
+    count_0 = 0 #counts the number of piles that are empty
+    min_pile = 0 #gives the index to the shortest pile of coins
+    num_to_remove = max(piles) #gives the index to the largest pile of coins
+
+    for i in range(len(piles)):
+        if piles[i] <= num_to_remove and piles[i] != 0:
+            min_pile = i #if there are more than 2 non-empty piles, remove all coins from a pile smaller than the largest pile but with more than 0 coins
+            num_to_remove = piles[i]
+
+        if piles[i] == 0:
+            count_0 += 1 #add one to counter if there are no coins in the pile
+
+    if len(piles) - count_0 == 2: #if there are only two non-empty piles in the list
+        for i in range(len(piles)):
+            if piles[i] != 0:
+                if piles[i] % 2 == 0: #if there are an even number of coins in the list
+                    min_pile = i
+                    num_to_remove = 2 #remove two from that pile to keep it even
+                else: #if there are an odd number of coins in the list
+                    min_pile = i
+                    num_to_remove = 1 #remove one coin from the list to keep it odd
+
+    if len(piles) - count_0 == 1: #if there is only one non-empty pile in the list
+        for i in range(len(piles)):
+            if piles[i] != 0:
+                min_pile = i
+                num_to_remove = piles[i] #remove all coins in the last pile
+
+    return (min_pile, num_to_remove)
